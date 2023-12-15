@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alireza <alireza@student.42.fr>            +#+  +:+       +#+         #
+#    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/27 16:56:34 by asohrabi          #+#    #+#              #
-#    Updated: 2023/12/15 11:08:07 by alireza          ###   ########.fr        #
+#    Updated: 2023/12/15 20:48:50 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,18 +62,18 @@ OBJ = ${FUNC:.c=.o}
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
-	cc ${CFLAGS} -c $< -o $@
+	@cc ${CFLAGS} -c $< -o $@
 
 all: ${NAME}
 
 ${NAME}: ${OBJ}	
-	ar -crs ${NAME} ${OBJ}
+	@ar -crs ${NAME} ${OBJ}
 
 clean:
-	rm -f ${OBJ}
+	@rm -f ${OBJ}
 
 fclean: clean
-	rm -f ${NAME}
+	@rm -f ${NAME}
 
 re: fclean all
 
