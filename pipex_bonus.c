@@ -6,11 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/18 17:45:51 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:09:37 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static void	child_process(char *argv, char **envp)
 {
