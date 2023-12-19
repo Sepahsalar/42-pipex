@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/27 16:56:34 by asohrabi          #+#    #+#              #
-#    Updated: 2023/12/15 20:48:50 by asohrabi         ###   ########.fr        #
+#    Updated: 2023/12/19 19:38:35 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,10 @@ FUNC = ft_atoi.c \
 			ft_lstlast.c \
 			ft_lstmap.c \
 			ft_lstnew.c \
-			ft_lstsize.c
+			ft_lstsize.c \
+			\
+			get_next_line.c \
+			get_next_line_utils.c
 
 
 OBJ = ${FUNC:.c=.o}

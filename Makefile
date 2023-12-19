@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 17:01:03 by asohrabi          #+#    #+#              #
-#    Updated: 2023/12/18 18:10:03 by asohrabi         ###   ########.fr        #
+#    Updated: 2023/12/19 21:21:55 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,11 @@ clean:
 fclean: clean
 	@make fclean -C ./libft
 	@rm -f ${NAME}
+	@rm -f .bonus
 	rm -f ${PROG}
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, bonus
+re_bonus: fclean bonus
+
+.PHONY: all, clean, fclean, re, bonus, re_bonus

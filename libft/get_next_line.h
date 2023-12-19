@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 10:08:20 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 20:30:47 by asohrabi         ###   ########.fr       */
+/*   Created: 2023/11/03 13:36:23 by asohrabi          #+#    #+#             */
+/*   Updated: 2023/12/19 21:13:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
+# include <stdlib.h>
+# include <unistd.h>
 
-	i = 0;
-	j = 0;
-	if (!s1 || !s2)
-		return (0);
-	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	while (s1[i])
-	{
-		str[i] = ((char *)s1)[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		str[i] = ((char *)s2)[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
+# endif
+
+char	*get_next_line(int fd);
+int		my_strlen(char *s);
+char	*my_strjoin(char *s1, char *s2);
+char	*my_strchr(char *s, int c);
+char	*my_strdup(char *src);
+void	*ft_free_str(char *str_to_free);
+
+#endif

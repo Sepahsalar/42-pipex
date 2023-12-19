@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/18 18:10:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:57:19 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_putstr_fd("Error: Wrong Arguments!\n", 2);
 		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 outfile\n", 2);
-		return (1);
+		exit(1);
 	}
 	else
 	{
