@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 18:57:19 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/19 21:41:51 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	parent_process(int *fd, char **argv, char **envp)
 		execute_cmd(argv[3], envp);
 	else
 		waitpid(child_pid, NULL, 0);
+	// exit (0);
 }
 
 int	main(int argc, char **argv, char **envp)

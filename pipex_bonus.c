@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 21:18:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/19 21:38:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	child_process(char *argv, char **envp)
 	}
 }
 
-int	open_file(char *argv, int i)
+static int	open_file(char *argv, int i)
 {
 	int	fd;
 
@@ -54,43 +54,7 @@ int	open_file(char *argv, int i)
 	return (fd);
 }
 
-void	here_doc(char *limiter)
-{
-	int		fd[2];
-	pid_t	pid;
-	char	*line;
-
-	if (pipe(fd) == -1)
-		error();
-	pid = fork();
-	if (pid == -1)
-		error();
-	else if (pid == 0)
-	{
-		close(fd[0]);
-		while (1)
-		{
-			ft_putstr_fd("pipe heredoc> ", 1);
-			line = get_next_line(0);
-			if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
-			{
-				free(line);
-				exit(0);
-			}
-			ft_putstr_fd(line, fd[1]);
-			free(line);
-		}
-	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]); //maybe delete
-		wait(NULL); //maybe waitpid
-	}
-}
-
-void	pipex(int argc, char **argv, char **envp)
+static void	pipex(int argc, char **argv, char **envp)
 {
 	int	i;
 	int	filein;
@@ -117,7 +81,8 @@ void	pipex(int argc, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", 8) == 0 && argc < 6))
+	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0
+			&& argc < 6))
 	{
 		ft_putstr_fd("Error: Wrong Arguments!\n", 2);
 		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 ... outfile\n", 2);

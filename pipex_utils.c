@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/18 18:10:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/19 21:40:04 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	error(void)
 	exit(1);
 }
 
-void	ft_free(char **array)
+static void	ft_free(char **array)
 {
 	int	i;
 

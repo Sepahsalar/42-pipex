@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:57:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 17:56:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/19 21:39:55 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 
 void	error(void);
 void	execute_cmd(char *argv, char **envp);
-void	ft_free(char **array);
+void	here_doc(char *limiter);
 
 #endif
