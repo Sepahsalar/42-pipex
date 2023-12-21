@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 21:37:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 21:48:39 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:24:54 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	here_doc(char *limiter)
 	else
 	{
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			error();
 		close(fd[0]);
-		wait(NULL);
+		//wait(NULL); // maybe not right
 	}
 }

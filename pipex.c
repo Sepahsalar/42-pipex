@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 21:41:51 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:20:10 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ static void	child_process(int *fd, char **argv, char **envp)
 	filein = open(argv[1], O_RDONLY, 0777);
 	if (filein == -1)
 		error();
-	dup2(fd[1], STDOUT_FILENO);
-	dup2(filein, STDIN_FILENO);
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+		error();
+	if (dup2(filein, STDIN_FILENO) == -1)
+		error();
 	close(fd[1]);
 	close(filein);
 	execute_cmd(argv[2], envp);
-	// exit(0);
 }
 
 static void	parent_process(int *fd, char **argv, char **envp)
@@ -37,8 +38,10 @@ static void	parent_process(int *fd, char **argv, char **envp)
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
 		error();
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fileout, STDOUT_FILENO);
+	if (dup2(fd[0], STDIN_FILENO) == -1)
+		error();
+	if (dup2(fileout, STDOUT_FILENO) == -1)
+		error();
 	close(fd[0]);
 	close(fileout);
 	child_pid = fork();
@@ -48,7 +51,6 @@ static void	parent_process(int *fd, char **argv, char **envp)
 		execute_cmd(argv[3], envp);
 	else
 		waitpid(child_pid, NULL, 0);
-	// exit (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -58,8 +60,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		ft_putstr_fd("Error: Wrong Arguments!\n", 2);
-		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 outfile\n", 2);
+		ft_putstr_fd("Error: Wrong Arguments!\n", STDERR_FILENO);
+		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 outfile\n", STDERR_FILENO);
 		exit(1);
 	}
 	else
@@ -71,8 +73,9 @@ int	main(int argc, char **argv, char **envp)
 			error();
 		else if (pid == 0)
 			child_process(fd, argv, envp);
-		waitpid(pid, NULL, 0);
+		// waitpid(pid, NULL, 0);
 		parent_process(fd, argv, envp);
+		waitpid(pid, NULL, 0);
 	}
 	return (0);
 }

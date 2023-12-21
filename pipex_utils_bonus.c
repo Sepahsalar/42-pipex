@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2023/12/19 17:55:27 by asohrabi         ###   ########.fr       */
+/*   Updated: 2023/12/21 08:48:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	execute_cmd(char *argv, char **envp)
 	if (!path)
 	{
 		ft_free(cmd);
-		ft_putstr_fd("Error: command not found: ", 2);
+		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
 		ft_putendl_fd(argv, 2);
 		exit(1);
 	}
