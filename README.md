@@ -117,9 +117,9 @@ FDs 0, 1 and 2 are by default assigned to `stdin`, `stdout` and stderr. `infile`
                            -----------------
                  4         |     outfile   |  // open()
                            -----------------
-                 5         |     fd[0]    | 
+                 5         |     fd[0]     | 
                            -----------------
-                 6         |     fd[1]    |  
+                 6         |     fd[1]     |  
                            -----------------
 ```
 
