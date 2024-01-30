@@ -61,7 +61,7 @@ $> ./pipex infile cat "wc -l" outfile
 
 ## Description
 
-This program takes the infile, outfile to redirect the STDIN (<), STDOUT (>) and 2 commands to pipe. To execute the mandatory program, type the command listed below. 
+This program takes the infile, outfile to redirect the `stdin` (<), `stdout` (>) and 2 commands to pipe. To execute the mandatory program, type the command listed below. 
 ```bash
 $> ./pipex infile cmd1 cmd2 outfile
 ```
@@ -69,7 +69,7 @@ The arguments will be processed as same as below on the shell.
 ```bash
 $>  < infile cmd1 | cmd2 > outfile
 ```
-To execute the bonus program, the project needs to be compiled with the bonus rule before. Then, it takes the infile, outfile to redirect STDIN (<), STDOUT (>) like previous one, but multiple commands can be accepted.
+To execute the bonus program, the project needs to be compiled with the bonus rule before. Then, it takes the infile, outfile to redirect `stdin` (<), `stdout` (>) like previous one, but multiple commands can be accepted.
 ```bash
 $> ./pipex infile cmd1 cmd2 cmd3 ... outfile
 ```
@@ -77,7 +77,7 @@ The arguments will be processed as same as below on the shell.
 ```bash
 $>  < infile cmd1 | cmd2 | cmd3 ... > outfile
 ```
-Only for the bonus program, it supports not only the single angle bracket for the STDOUT (>), but also the double angle bracket for the STDOUT (>>). The single angle bracket will overwite the entire file, but the double angle bracket will append after the file. This can be done by writing the arguments with the index 1 has the here_doc. In this case, the double bracket for the STDIN (<<) will be supported instead of the single bracket for the STDIN (<). That means, infile will be replaced and the lines that a user typed will be written on the STDIN until typing the limiter. When the limiter is typed, the first commands will be executed by taking all of the lines of the STDIN (except the limiter).
+Only for the bonus program, it supports not only the single angle bracket for the `stdout` (>), but also the double angle bracket for the `stdout` (>>). The single angle bracket will overwite the entire file, but the double angle bracket will append after the file. This can be done by writing the arguments with the index 1 has the here_doc. In this case, the double bracket for the `stdin` (<<) will be supported instead of the single bracket for the `stdin` (<). That means, infile will be replaced and the lines that a user typed will be written on the `stdin` until typing the limiter. When the limiter is typed, the first commands will be executed by taking all of the lines of the `stdin` (except the limiter).
 ```bash
 $> ./pipex here_doc lIMITER cmd1 cmd2 cmd3 ... outfile
 ```
@@ -104,7 +104,7 @@ The `fork()` function divides the process into two sub-processes, running in par
 
 ### FDs
  
-FDs 0, 1 and 2 are by default assigned to stdin, stdout and stderr. `infile`, `outfile`, the pipe, the `stdin` and `stdout` are all FDs. Our fd table right now looks like this:
+FDs 0, 1 and 2 are by default assigned to `stdin`, `stdout` and stderr. `infile`, `outfile`, the pipe, the `stdin` and `stdout` are all FDs. Our fd table right now looks like this:
 ```bash
                            -----------------    
                  0         |     stdin     |  
@@ -125,9 +125,9 @@ FDs 0, 1 and 2 are by default assigned to stdin, stdout and stderr. `infile`, `o
 
 
 
-### Swapping fds
+### Swapping fds with dup2()
 
-For the child process, we want infile to be our stdin (as input), and `fd[1]` to be our stdout (we write to `fd[1]` the output of `cmd1`). In the parent process, we want `fd[0]` to be our stdin (`fd[0]` reads from `fd[1]` the output of `cmd1`), and outfile to be our stdout (we write to it the output of `cmd2`).
+For the child process, we want infile to be our `stdin` (as input), and `fd[1]` to be our `stdout` (we write to `fd[1]` the output of `cmd1`). In the parent process, we want `fd[0]` to be our `stdin` (`fd[0]` reads from `fd[1]` the output of `cmd1`), and outfile to be our `stdout` (we write to it the output of `cmd2`).
 ```bash
 # Each cmd requires an input (from stdin) and produces an output (to stdout).
    
@@ -145,7 +145,7 @@ as stdin for cmd1                                 as stdout for cmd2
        cmd1 stdout)                      cmd2 stdin)
 
 ```
-
+We swap fds to `stdin`/`stdout` with `dup2()`.
 
 
 ### Executing with execve()
