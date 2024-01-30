@@ -94,13 +94,13 @@ $>  cmd1 << LIMITER | cmd2 | cmd3 ... >> outfile
 
 The `pipe()` function takes an array of two integers and links them together. What is written into `fd[0]` is visible to `fd[1]`, and vice versa. `pipe()` assigns a file descriptor (fd) to each end. By obtaining an fd for each end, files can be read from and written to, allowing communication between the two ends. `fd[1]` will write to its own fd, while `fd[0]` will read from `fd[1]`'s fd and write to its own.
 
-</br>
+
 
 ### Forking the processes
 
 The `fork()` function divides the process into two sub-processes, running in parallel and simultaneously. It returns 0 for the child process, a non-zero value for the parent process, and -1 in case of an error. In this scenario, `fd[1]` corresponds to the child process, while `fd[0]` corresponds to the parent process; the child writes, and the parent reads. Since data must be written before it can be read, `cmd1` will be executed by the child, and `cmd2` by the parent. 
 
-</br>
+
 
 ### FDs
  
@@ -123,7 +123,7 @@ FDs 0, 1 and 2 are by default assigned to stdin, stdout and stderr. `infile`, `o
                            -----------------
 ```
 
-</br>
+
 
 ### Swapping fds with dup2()
 
@@ -147,13 +147,13 @@ as stdin for cmd1                                 as stdout for cmd2
 
 ```
 
-</br>
+
 
 ### Executing with execve()
 
 The `execve()` function attempts to execute the command by searching through every possible path until it finds a valid one. If the command does not exist, `execve()` will take no action and return -1. However, if the command exists, `execve()` will execute it and replace the current process, ensuring no memory leaks occur by deleting all ongoing processes.
 
-</br>
+
 
 ### Using access()
 
