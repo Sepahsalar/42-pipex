@@ -125,10 +125,9 @@ FDs 0, 1 and 2 are by default assigned to stdin, stdout and stderr. `infile`, `o
 
 
 
-### Swapping fds with dup2()
+### Swapping fds
 
-For the child process, we want infile to be our stdin (as input), and `fd[1]` to be our stdout (we write to `fd[1]` the output of `cmd1`). In the parent process, we want `fd[0]` to be our stdin (`fd[0]` reads from `fd[1]` the output of `cmd1`), and outfile to be our stdout (we write to it the output of `cmd2`)
-Visually,
+For the child process, we want infile to be our stdin (as input), and `fd[1]` to be our stdout (we write to `fd[1]` the output of `cmd1`). In the parent process, we want `fd[0]` to be our stdin (`fd[0]` reads from `fd[1]` the output of `cmd1`), and outfile to be our stdout (we write to it the output of `cmd2`).
 ```bash
 # Each cmd requires an input (from stdin) and produces an output (to stdout).
    
