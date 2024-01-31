@@ -1,5 +1,5 @@
 # 42-pipex
-Pipex is a project that re-creates in C the way two commands are piped together via `|` in the shell
+Pipex is a project that re-creates in `C` programming the way two commands are piped together via `|` in the shell.
 
 ```bash
 pipe()
@@ -146,6 +146,6 @@ We swap fds to `stdin`/`stdout` with `dup2()`.
 
 The `execve()` function attempts to execute the command by searching through every possible path until it finds a valid one. If the command does not exist, `execve()` will take no action and return `-1`. However, if the command exists, `execve()` will execute it and replace the current process, ensuring no memory leaks occur by deleting all ongoing processes.
 
-### Using access()
+### Using `access()`
 
 If the command does not exist, `execve()` will execute nothing and won't display any error messages. To ensure proper handling, you should check if the command exists before attempting execution using `access()`. If the command does not exist, you should then send an error message.
