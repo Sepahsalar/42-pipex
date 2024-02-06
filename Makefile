@@ -6,11 +6,11 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 17:01:03 by asohrabi          #+#    #+#              #
-#    Updated: 2024/01/30 11:06:07 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/02/06 13:50:36 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROG = pipex
+NAME = pipex
 
 FUNC = pipex.c \
 			pipex_utils.c \
@@ -25,15 +25,15 @@ OBJ_BONUS = ${FUNC_BONUS:.c=.o}
 
 CFLAGS = -Wall -Wextra -Werror
 
-all: ${PROG}
+all: ${NAME}
 
-${PROG}: ${OBJ} .mandatory
-	@rm -rf ${OBJ_BONUS}
+${NAME}: ${OBJ} .mandatory
+	@rm -f ${OBJ_BONUS}
 	@make re -C ./libft
-	@cc ${OBJ} -Llibft -lft -o ${PROG}
+	@cc ${OBJ} -Llibft -lft -o ${NAME}
 
 .mandatory: 
-	@rm -rf .bonus
+	@rm -f .bonus
 	@touch .mandatory
 
 %.o: %.c
@@ -42,22 +42,21 @@ ${PROG}: ${OBJ} .mandatory
 bonus: .bonus
 
 .bonus: ${OBJ_BONUS}
-	@rm -rf ${OBJ}
+	@rm -f ${OBJ}
 	@make re -C ./libft
-	@cc ${OBJ_BONUS} -Llibft -lft -o ${PROG}
-	@rm -rf .mandatory
+	@cc ${OBJ_BONUS} -Llibft -lft -o ${NAME}
+	@rm -f .mandatory
 	@touch .bonus
 
 clean:
 	@make clean -C ./libft
-	@rm -rf .mandatory
-	@rm -rf .bonus
-	rm -rf ${OBJ} ${OBJ_BONUS}
+	@rm -f .mandatory
+	@rm -f .bonus
+	rm -f ${OBJ} ${OBJ_BONUS}
 
 fclean: clean
 	@make fclean -C ./libft
-	@rm -rf ${NAME}
-	rm -rf ${PROG}
+	rm -f ${NAME}
 
 re: fclean all
 
