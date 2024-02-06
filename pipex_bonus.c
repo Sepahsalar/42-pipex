@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/01/30 11:07:20 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:23:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0
 			&& argc < 6))
 	{
-		ft_putstr_fd("Error: Wrong Arguments!\n", STDERR_FILENO);
-		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 ... outfile\n",
+		ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
+		ft_putendl_fd("Ex: ./pipex infile cmd1 cmd2 ... outfile",
 			STDERR_FILENO);
-		ft_putstr_fd("Ex: ./pipex \"here_doc\" LIMITER cmd cmd1 outfile\n",
+		ft_putendl_fd("Ex: ./pipex \"here_doc\" LIMITER cmd cmd1 outfile",
 			STDERR_FILENO);
 		exit(1);
 	}

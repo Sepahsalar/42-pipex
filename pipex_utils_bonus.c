@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/01/30 11:07:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:25:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ static char	*get_path(char *cmd, char **envp)
 		free(temp);
 		return (NULL);
 	}
-	else
-		return (final_path);
+	// else
+	// 	return (final_path);
+	// ft_free(total_paths);
+	// return (0);
 	ft_free(total_paths);
-	return (0);
+	return (final_path);
 }
 
 void	execute_cmd(char *argv, char **envp)
@@ -103,7 +105,7 @@ void	execute_cmd(char *argv, char **envp)
 	{
 		ft_free(cmd);
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
-		ft_putendl_fd(argv, 2);
+		ft_putendl_fd(argv, STDERR_FILENO);
 		exit(1);
 	}
 	if (execve(path, cmd, envp) == -1)

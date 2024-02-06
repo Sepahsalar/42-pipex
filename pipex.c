@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/06 16:44:12 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:23:21 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 5)
 	{
-		ft_putstr_fd("Error: Wrong Arguments!\n", STDERR_FILENO);
-		ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 outfile\n", STDERR_FILENO);
+		ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
+		ft_putendl_fd("Ex: ./pipex infile cmd1 cmd2 outfile", STDERR_FILENO);
 		exit(1);
 	}
 	else
