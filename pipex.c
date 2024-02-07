@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/06 17:23:21 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:15:59 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	child_process(int *fd, char **argv, char **envp)
 	int		filein;
 
 	close(fd[0]);
-	filein = open(argv[1], O_RDONLY, 0777);
+	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
 		error();
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
@@ -35,7 +35,7 @@ static void	parent_process(int *fd, char **argv, char **envp)
 	pid_t	child_pid;
 
 	close(fd[1]);
-	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fileout == -1)
 		error();
 	if (dup2(fd[0], STDIN_FILENO) == -1)

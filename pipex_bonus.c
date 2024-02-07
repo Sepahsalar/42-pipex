@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/06 17:23:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:16:22 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static int	open_file(char *argv, int i)
 
 	fd = 0;
 	if (i == 0)
-		fd = open(argv, O_RDONLY, 0777);
+		fd = open(argv, O_RDONLY);
 	else if (i == 1)
-		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else if (i == 2)
-		fd = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		fd = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd == -1)
 		error();
 	return (fd);
