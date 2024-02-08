@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/07 12:15:59 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:05:38 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int argc, char **argv, char **envp)
 			error();
 		else if (pid == 0)
 			child_process(fd, argv, envp);
-		// waitpid(pid, NULL, 0);
 		parent_process(fd, argv, envp);
 		waitpid(pid, NULL, 0);
 	}

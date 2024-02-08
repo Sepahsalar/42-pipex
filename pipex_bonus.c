@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/07 12:16:22 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:09:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	child_process(char *argv, char **envp)
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 			error();
 		close(fd[0]);
-		// waitpid(pid, NULL, 0); //maybe not right
 	}
 }
 
@@ -81,7 +80,8 @@ static void	pipex(int argc, char **argv, char **envp)
 	if (dup2(fileout, STDOUT_FILENO) == -1)
 		error();
 	execute_cmd(argv[argc - 2], envp);
-	wait(NULL); //maybe not right
+	wait(NULL);
+	// waitpid(pid, NULL, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
