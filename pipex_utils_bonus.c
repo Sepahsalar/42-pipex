@@ -6,17 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 13:02:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:33:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	error(int status)
-{
-	perror("Error");
-	exit(status);
-}
 
 void	ft_free(char **array)
 {
@@ -42,14 +36,14 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 		if (!temp)
 		{
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			error();
 		}
 		final_path = ft_strjoin(temp, cmd);
 		if (!final_path)
 		{
 			free(temp);
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			error();
 		}
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
@@ -69,11 +63,20 @@ static char	*get_path(char *cmd, char **envp)
 
 	i = 0;
 	temp = NULL;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			break ;
 		i++;
+	}
+	if (!envp[i])
+	{
+		ft_putstr_fd("Error: command not found: \n", STDERR_FILENO);
+		exit(127);
+	}
 	total_paths = ft_split(envp[i] + 5, ':');
 	if (!total_paths)
-		error(EXIT_FAILURE);
+		error();
 	final_path = get_path_con(total_paths, cmd, temp, i);
 	if (!final_path)
 	{
@@ -81,12 +84,21 @@ static char	*get_path(char *cmd, char **envp)
 		free(temp);
 		return (NULL);
 	}
-	// else
-	// 	return (final_path);
-	// ft_free(total_paths);
-	// return (0);
 	ft_free(total_paths);
 	return (final_path);
+}
+
+void	check_space(char *argv)
+{
+	char	*temp;
+
+	temp = ft_strtrim(argv, " ");
+	if (temp[0] == '\0')
+	{
+		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
+		ft_putendl_fd(argv, STDERR_FILENO);
+		exit(127);
+	}
 }
 
 void	execute_cmd(char *argv, char **envp)
@@ -94,9 +106,10 @@ void	execute_cmd(char *argv, char **envp)
 	char	**cmd;
 	char	*path;
 
+	check_space(argv);
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
-		error(EXIT_FAILURE);
+		error();
 	if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
 		path = get_path(cmd[0], envp);
 	else
@@ -108,6 +121,9 @@ void	execute_cmd(char *argv, char **envp)
 		ft_putendl_fd(argv, STDERR_FILENO);
 		exit(127);
 	}
-	if (execve(path, cmd, envp) == -1)
-		error(EXIT_FAILURE);
+	else
+	{
+		if (execve(path, cmd, envp) == -1)
+			error();
+	}
 }

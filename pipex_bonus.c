@@ -6,11 +6,17 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 16:08:09 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:33:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	error(void)
+{
+	perror("Error");
+	exit(EXIT_FAILURE);
+}
 
 static void	child_process(char *argv, char **envp)
 {
@@ -18,15 +24,15 @@ static void	child_process(char *argv, char **envp)
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-		error(EXIT_FAILURE);
+		error();
 	pid = fork();
 	if (pid == -1)
-		error(EXIT_FAILURE);
+		error();
 	if (pid == 0)
 	{
 		close(fd[0]);
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			error(EXIT_FAILURE);
+			error();
 		close(fd[1]);
 		execute_cmd(argv, envp);
 	}
@@ -34,7 +40,7 @@ static void	child_process(char *argv, char **envp)
 	{
 		close(fd[1]);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
-			error(EXIT_FAILURE);
+			error();
 		close(fd[0]);
 	}
 }
@@ -51,7 +57,7 @@ static int	open_file(char *argv, int i)
 	else if (i == 2)
 		fd = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd == -1)
-		error(EXIT_FAILURE);
+		error();
 	return (fd);
 }
 
@@ -73,12 +79,12 @@ static void	pipex(int argc, char **argv, char **envp)
 		fileout = open_file(argv[argc - 1], 1);
 		filein = open_file(argv[1], 0);
 		if (dup2(filein, STDIN_FILENO) == -1)
-			error(EXIT_FAILURE);
+			error();
 	}
 	while (i < argc - 2)
 		child_process(argv[i++], envp);
 	if (dup2(fileout, STDOUT_FILENO) == -1)
-		error(EXIT_FAILURE);
+		error();
 	execute_cmd(argv[argc - 2], envp);
 	wait(NULL);
 	// waitpid(pid, NULL, 0);

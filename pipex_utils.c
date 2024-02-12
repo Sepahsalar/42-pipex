@@ -6,30 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 17:54:35 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:29:29 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	error(int status)
-{
-	perror("Error");
-	exit(status);
-}
-
-static void	ft_free(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 {
@@ -42,14 +23,14 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 		if (!temp)
 		{
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			error();
 		}
 		final_path = ft_strjoin(temp, cmd);
 		if (!final_path)
 		{
 			free(temp);
 			ft_free(total_paths);
-			error(EXIT_FAILURE);
+			error();
 		}
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
@@ -59,7 +40,7 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 	}
 	return (0);
 }
-// Handle empty commands or just spaces, also "unset PATH" case
+
 static char	*get_path(char *cmd, char **envp)
 {
 	int		i;
@@ -69,24 +50,42 @@ static char	*get_path(char *cmd, char **envp)
 
 	i = 0;
 	temp = NULL;
-	final_path = NULL;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0 && envp[i])
-		i++;
-	if (envp[i] != NULL)
+	while (envp[i])
 	{
-		total_paths = ft_split(envp[i] + 5, ':');
-		if (!total_paths)
-			error(EXIT_FAILURE);
-		final_path = get_path_con(total_paths, cmd, temp, i);
-		if (!final_path)
-		{
-			ft_free(total_paths);
-			free(temp);
-			return (NULL);
-		}
-		ft_free(total_paths);
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			break ;
+		i++;
 	}
+	if (!envp[i])
+	{
+		ft_putstr_fd("Error: command not found: \n", STDERR_FILENO);
+		exit(127);
+	}
+	total_paths = ft_split(envp[i] + 5, ':');
+	if (!total_paths)
+		error();
+	final_path = get_path_con(total_paths, cmd, temp, i);
+	if (!final_path)
+	{
+		ft_free(total_paths);
+		free(temp);
+		return (NULL);
+	}
+	ft_free(total_paths);
 	return (final_path);
+}
+
+void	check_space(char *argv)
+{
+	char	*temp;
+
+	temp = ft_strtrim(argv, " ");
+	if (temp[0] == '\0')
+	{
+		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
+		ft_putendl_fd(argv, STDERR_FILENO);
+		exit(127);
+	}
 }
 
 void	execute_cmd(char *argv, char **envp)
@@ -94,9 +93,10 @@ void	execute_cmd(char *argv, char **envp)
 	char	**cmd;
 	char	*path;
 
+	check_space(argv);
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
-		error(EXIT_FAILURE);
+		error();
 	if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
 		path = get_path(cmd[0], envp);
 	else
@@ -111,6 +111,6 @@ void	execute_cmd(char *argv, char **envp)
 	else
 	{
 		if (execve(path, cmd, envp) == -1)
-			error(EXIT_FAILURE);
+			error();
 	}
 }
