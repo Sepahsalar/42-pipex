@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 14:28:11 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:54:35 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 	}
 	return (0);
 }
-
+// Handle empty commands or just spaces, also "unset PATH" case
 static char	*get_path(char *cmd, char **envp)
 {
 	int		i;
@@ -101,7 +101,7 @@ void	execute_cmd(char *argv, char **envp)
 		path = get_path(cmd[0], envp);
 	else
 		path = cmd[0];
-	if (path == NULL)
+	if (!path)
 	{
 		ft_free(cmd);
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
