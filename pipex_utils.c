@@ -6,16 +6,16 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/06 17:26:30 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:28:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error(void)
+void	error(int status)
 {
 	perror("Error");
-	exit(1);
+	exit(status);
 }
 
 static void	ft_free(char **array)
@@ -42,14 +42,14 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 		if (!temp)
 		{
 			ft_free(total_paths);
-			error();
+			error(EXIT_FAILURE);
 		}
 		final_path = ft_strjoin(temp, cmd);
 		if (!final_path)
 		{
 			free(temp);
 			ft_free(total_paths);
-			error();
+			error(EXIT_FAILURE);
 		}
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
@@ -69,23 +69,23 @@ static char	*get_path(char *cmd, char **envp)
 
 	i = 0;
 	temp = NULL;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	final_path = NULL;
+	while (ft_strnstr(envp[i], "PATH", 4) == 0 && envp[i])
 		i++;
-	total_paths = ft_split(envp[i] + 5, ':');
-	if (!total_paths)
-		error();
-	final_path = get_path_con(total_paths, cmd, temp, i);
-	if (!final_path)
+	if (envp[i] != NULL)
 	{
+		total_paths = ft_split(envp[i] + 5, ':');
+		if (!total_paths)
+			error(EXIT_FAILURE);
+		final_path = get_path_con(total_paths, cmd, temp, i);
+		if (!final_path)
+		{
+			ft_free(total_paths);
+			free(temp);
+			return (NULL);
+		}
 		ft_free(total_paths);
-		free(temp);
-		return (NULL);
 	}
-	// else
-	// 	return (final_path);
-	// ft_free(total_paths);
-	// return (0);
-	ft_free(total_paths);
 	return (final_path);
 }
 
@@ -96,18 +96,21 @@ void	execute_cmd(char *argv, char **envp)
 
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
-		error();
+		error(EXIT_FAILURE);
 	if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
 		path = get_path(cmd[0], envp);
 	else
 		path = cmd[0];
-	if (!path)
+	if (path == NULL)
 	{
 		ft_free(cmd);
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
 		ft_putendl_fd(argv, STDERR_FILENO);
-		exit(1);
+		exit(127);
 	}
-	if (execve(path, cmd, envp) == -1)
-		error();
+	else
+	{
+		if (execve(path, cmd, envp) == -1)
+			error(EXIT_FAILURE);
+	}
 }

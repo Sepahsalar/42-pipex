@@ -6,16 +6,16 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:47 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/06 17:25:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:02:31 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	error(void)
+void	error(int status)
 {
 	perror("Error");
-	exit(1);
+	exit(status);
 }
 
 void	ft_free(char **array)
@@ -42,14 +42,14 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 		if (!temp)
 		{
 			ft_free(total_paths);
-			error();
+			error(EXIT_FAILURE);
 		}
 		final_path = ft_strjoin(temp, cmd);
 		if (!final_path)
 		{
 			free(temp);
 			ft_free(total_paths);
-			error();
+			error(EXIT_FAILURE);
 		}
 		free(temp);
 		if (access(final_path, F_OK | X_OK) == 0)
@@ -73,7 +73,7 @@ static char	*get_path(char *cmd, char **envp)
 		i++;
 	total_paths = ft_split(envp[i] + 5, ':');
 	if (!total_paths)
-		error();
+		error(EXIT_FAILURE);
 	final_path = get_path_con(total_paths, cmd, temp, i);
 	if (!final_path)
 	{
@@ -96,7 +96,7 @@ void	execute_cmd(char *argv, char **envp)
 
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
-		error();
+		error(EXIT_FAILURE);
 	if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
 		path = get_path(cmd[0], envp);
 	else
@@ -106,8 +106,8 @@ void	execute_cmd(char *argv, char **envp)
 		ft_free(cmd);
 		ft_putstr_fd("Error: command not found: ", STDERR_FILENO);
 		ft_putendl_fd(argv, STDERR_FILENO);
-		exit(1);
+		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
-		error();
+		error(EXIT_FAILURE);
 }

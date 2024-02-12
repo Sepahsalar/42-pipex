@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:49 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/01/30 11:07:36 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:03:11 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-void	error(void);
+void	error(int status);
 void	execute_cmd(char *argv, char **envp);
 
 #endif
