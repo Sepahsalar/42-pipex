@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 21:37:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 13:07:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:37:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ void	here_doc(char *limiter)
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-		error(EXIT_FAILURE);
+		error();
 	pid = fork();
 	if (pid == -1)
-		error(EXIT_FAILURE);
+		error();
 	else if (pid == 0)
 		here_doc_helper(fd, limiter);
 	else
 	{
 		close(fd[1]);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
-			error(EXIT_FAILURE);
+			error();
 		close(fd[0]);
 		//wait(NULL); // maybe not right
 	}
