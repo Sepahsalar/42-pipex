@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:48 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 12:54:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:17:29 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	status_check(int status)
 	else if (WIFSIGNALED(status))
 		return (WTERMSIG(status) + 128);
 	else
-		return (1);
+		return (1); //maybe not right
 }
 
 void	first_child_process(int *fd, char **argv, char **envp)

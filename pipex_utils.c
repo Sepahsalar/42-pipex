@@ -6,20 +6,19 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 12:18:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:16:50 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
+static char	*get_path_con(char **total_paths, char *cmd, char *temp)
 {
 	char	*final_path;
 
-	i = 0;
-	while (total_paths[i])
+	while (*total_paths)
 	{
-		temp = ft_strjoin(total_paths[i], "/");
+		temp = ft_strjoin(*total_paths, "/");
 		if (!temp)
 		{
 			ft_free(total_paths);
@@ -38,39 +37,34 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 		if (access(final_path, F_OK | X_OK) == 0)
 			return (final_path);
 		free(final_path);
-		i++;
+		total_paths++;
 	}
 	return (0);
 }
 
 static char	*get_path(char *cmd, char **envp)
 {
-	int		i;
 	char	**total_paths;
-	char	*temp;
 	char	*final_path;
 
-	i = 0;
-	temp = NULL;
-	while (envp[i])
+	while (*envp)
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 			break ;
-		i++;
+		envp++;
 	}
-	if (!envp[i])
+	if (!*envp)
 	{
 		ft_putstr_fd("Error: command not found: \n", STDERR_FILENO);
 		exit(127);
 	}
-	total_paths = ft_split(envp[i] + 5, ':');
+	total_paths = ft_split(*envp + 5, ':');
 	if (!total_paths)
 		error();
-	final_path = get_path_con(total_paths, cmd, temp, i);
+	final_path = get_path_con(total_paths, cmd, NULL);
 	if (!final_path)
 	{
 		ft_free(total_paths);
-		free(temp);
 		return (NULL);
 	}
 	ft_free(total_paths);
