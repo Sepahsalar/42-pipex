@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 18:29:29 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:30:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*get_path(char *cmd, char **envp)
 	return (final_path);
 }
 
-void	check_space(char *argv)
+static void	check_space(char *argv)
 {
 	char	*temp;
 

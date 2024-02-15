@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/12 18:26:31 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:33:45 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,14 @@ void	ft_free(char **array)
 	free(array);
 }
 
-static void	child_process(int *fd, char **argv, char **envp)
-{
-	int		filein;
-
-	close(fd[0]);
-	filein = open(argv[1], O_RDONLY);
-	if (filein == -1)
-		error();
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		error();
-	if (dup2(filein, STDIN_FILENO) == -1)
-		error();
-	close(fd[1]);
-	close(filein);
-	execute_cmd(argv[2], envp);
-}
-
-static void	parent_process(int *fd, char **argv, char **envp)
-{
-	int		fileout;
-	pid_t	child_pid;
-
-	close(fd[1]);
-	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fileout == -1)
-		error();
-	if (dup2(fd[0], STDIN_FILENO) == -1)
-		error();
-	if (dup2(fileout, STDOUT_FILENO) == -1)
-		error();
-	close(fd[0]);
-	close(fileout);
-	child_pid = fork();
-	if (child_pid == -1)
-		error();
-	else if (child_pid == 0)
-		execute_cmd(argv[3], envp);
-	else
-		waitpid(child_pid, NULL, 0);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
 	pid_t	pid;
+	int		status;
+	int		wait;
 
+	status = 0;
 	if (argc != 5)
 	{
 		ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
@@ -91,9 +53,12 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == -1)
 			error();
 		else if (pid == 0)
-			child_process(fd, argv, envp);
-		parent_process(fd, argv, envp);
-		waitpid(pid, NULL, 0);
+			first_child_process(fd, argv, envp);
+		else
+		{
+			status = second_child_process(fd, argv, envp);
+			waitpid(pid, &wait, 0);
+		}
 	}
-	return (0);
+	exit (status);
 }
