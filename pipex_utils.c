@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 11:30:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:18:07 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static char	*get_path_con(char **total_paths, char *cmd, char *temp, int i)
 			error();
 		}
 		free(temp);
+		// if (access(final_path, F_OK) == 0 && access(final_path, X_OK) == -1)
+		// 	exit (126);
 		if (access(final_path, F_OK | X_OK) == 0)
 			return (final_path);
 		free(final_path);

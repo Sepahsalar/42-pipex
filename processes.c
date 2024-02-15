@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:48 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 11:46:04 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:54:03 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	first_child_process(int *fd, char **argv, char **envp)
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
 		error();
+		// exit (0);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		error();
 	if (dup2(filein, STDIN_FILENO) == -1)
@@ -50,6 +51,7 @@ int	second_child_process(int *fd, char **argv, char **envp)
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fileout == -1)
 		error();
+		// exit (0);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		error();
 	if (dup2(fileout, STDOUT_FILENO) == -1)
