@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 10:50:34 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:28:49 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int	main(int argc, char **argv, char **envp)
 		pid = fork();
 		if (pid == -1)
 			error(EXIT_FAILURE);
-		else if (pid == 0)
+		if (pid == 0)
 			first_child_process(fd, argv, envp);
-		// else
-		// {
+		else
+		{
 			status = second_child_process(fd, argv, envp);
 			waitpid(pid, &wait, 0);
-		// }
+		}
 	}
-	exit (status);
+	return (status); //or exit
 }
