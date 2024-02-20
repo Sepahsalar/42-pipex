@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 10:48:10 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:06:08 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	execute_cmd(char *argv, char **envp)
 	if (!ft_strchr(cmd[0], '/') && (cmd[0][0] != '.' && cmd[0][1] != '/'))
 		path = get_path(cmd[0], envp);
 	else
+	{
+		clean_cmd(cmd[0]);
 		path = cmd[0];
+	}
 	if (!path)
 	{
 		ft_free(cmd);

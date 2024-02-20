@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils2_bonus.c                               :+:      :+:    :+:   */
+/*   pipex_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 16:13:41 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/02/20 15:40:47 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/02/20 16:12:18 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-
-size_t	find_max(char *argv, char *str)
-{
-	size_t	max;
-
-	if (ft_strlen(argv) > ft_strlen(str))
-		max = ft_strlen(argv);
-	else
-		max = ft_strlen(str);
-	return (max);
-}
+#include "pipex.h"
 
 void	error(int status)
 {

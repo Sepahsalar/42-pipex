@@ -6,32 +6,13 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:28:49 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:41:23 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 // handle open file errors, quotations and \ and /
 // It would be reasonable to write a function for cmd not found
-void	error(int status)
-{
-	perror("Error");
-	exit(status);
-}
-
-void	ft_free(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];

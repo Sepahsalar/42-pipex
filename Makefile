@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 17:01:03 by asohrabi          #+#    #+#              #
-#    Updated: 2024/02/20 12:05:51 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/02/20 15:49:32 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = pipex
 
 FUNC = pipex.c \
 			pipex_utils.c \
+			pipex_utils2.c \
 			processes.c \
 
 FUNC_BONUS = pipex_bonus.c \

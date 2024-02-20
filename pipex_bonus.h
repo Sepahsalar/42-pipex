@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:57:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 12:05:17 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:13:52 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	ft_free(char **array);
 size_t	find_max(char *argv, char *str);
 void	execute_cmd(char *argv, char **envp);
 void	here_doc(char *limiter);
+void	clean_cmd(char *str);
 
 #endif
