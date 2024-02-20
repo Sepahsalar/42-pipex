@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:49 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 16:28:26 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:03:57 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-void	error(void);
+void	error(int status);
 void	ft_free(char **array);
 void	execute_cmd(char *argv, char **envp);
 void	first_child_process(int *fd, char **argv, char **envp);

@@ -6,19 +6,17 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/15 16:34:00 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 10:50:34 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-// handle open file errors, permission, quotations and \ and /
-// for permission I should change the error function, or
-// write a function for just that case
+// handle open file errors, quotations and \ and /
 // It would be reasonable to write a function for cmd not found
-void	error(void)
+void	error(int status)
 {
 	perror("Error");
-	exit(EXIT_FAILURE);
+	exit(status);
 }
 
 void	ft_free(char **array)
@@ -51,10 +49,10 @@ int	main(int argc, char **argv, char **envp)
 	else
 	{
 		if (pipe(fd) == -1)
-			error();
+			error(EXIT_FAILURE);
 		pid = fork();
 		if (pid == -1)
-			error();
+			error(EXIT_FAILURE);
 		else if (pid == 0)
 			first_child_process(fd, argv, envp);
 		// else
