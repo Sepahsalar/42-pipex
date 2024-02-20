@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:37:16 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:11:42 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static int	open_file(char *argv, int i)
 
 	if (i == 0)
 	{
-		if (access(argv, F_OK) == -1)
+		if (access(argv, F_OK | R_OK) == -1)
 			error(EXIT_SUCCESS);
-		if (access(argv, R_OK) == -1)
-			error(EXIT_FAILURE);
+		// if (access(argv, R_OK) == -1)
+		// 	error(EXIT_FAILURE);
 		fd = open(argv, O_RDONLY);
 	}
 	else if (i == 1)
@@ -86,7 +86,7 @@ static int	pipex(int argc, char **argv, char **envp)
 	int		status;
 
 	status = 0;
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
+	if (ft_strncmp(argv[1], "here_doc", find_max(argv[1], "here_doc")) == 0)
 	{
 		i = 3;
 		fileout = open_file(argv[argc - 1], 2);
@@ -112,7 +112,11 @@ static int	pipex(int argc, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc < 5 || (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0
+	int	status;
+
+	status = 0;
+	if (argc < 5
+		|| (ft_strncmp(argv[1], "here_doc", find_max(argv[1], "here_doc")) == 0
 			&& argc < 6))
 	{
 		ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
@@ -123,6 +127,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	else
-		pipex(argc, argv, envp);
-	return (0);
+		status = pipex(argc, argv, envp);
+	return (status); //or exit
 }

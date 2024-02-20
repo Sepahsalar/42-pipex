@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 21:37:12 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:02:43 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:51:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	here_doc(char *limiter)
 	pid = fork();
 	if (pid == -1)
 		error(EXIT_FAILURE);
-	else if (pid == 0)
+	if (pid == 0)
 		here_doc_helper(fd, limiter);
 	else
 	{

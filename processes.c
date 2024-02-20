@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:48 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:12:14 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:42:40 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	first_child_process(int *fd, char **argv, char **envp)
 	int		filein;
 
 	close(fd[0]);
-	if (access(argv[1], F_OK) == -1)
+	if (access(argv[1], F_OK | R_OK) == -1)
 		error(EXIT_SUCCESS);
-	if (access(argv[1], R_OK) == -1)
-		error(EXIT_FAILURE);
+	// if (access(argv[1], R_OK) == -1)
+	// 	error(EXIT_FAILURE);
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
 		error(EXIT_FAILURE);
