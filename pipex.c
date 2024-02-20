@@ -6,14 +6,15 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 18:04:53 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:43:36 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 // handle open file errors, quotations and \ and /
 // It would be reasonable to write a function for cmd not found
-// when an error occured, do not exit the program 
+// when an error occured, do not exit the program
+// handle this: ./pipex int te wcl out1 for bonus part
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
