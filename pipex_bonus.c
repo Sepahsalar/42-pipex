@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:33:54 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:37:16 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ static int	pipex(int argc, char **argv, char **envp)
 		error(EXIT_FAILURE);
 	execute_cmd(argv[argc - 2], envp);
 	wait(&status);
-	return (status_check(status));
 	// waitpid(pid, &status, 0);
+	return (status_check(status));
 }
 
 int	main(int argc, char **argv, char **envp)
