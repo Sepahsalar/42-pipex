@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:48 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 10:52:03 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:12:14 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	second_child_process(int *fd, char **argv, char **envp)
 		error(EXIT_FAILURE);
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fileout == -1)
-		error(EXIT_SUCCESS);
+		error(EXIT_FAILURE);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		error(EXIT_FAILURE);
 	if (dup2(fileout, STDOUT_FILENO) == -1)
