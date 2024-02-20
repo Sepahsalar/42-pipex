@@ -6,13 +6,14 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 15:41:23 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:04:53 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 // handle open file errors, quotations and \ and /
 // It would be reasonable to write a function for cmd not found
+// when an error occured, do not exit the program 
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
@@ -42,5 +43,5 @@ int	main(int argc, char **argv, char **envp)
 			waitpid(pid, &wait, 0);
 		}
 	}
-	return (status); //or exit
+	return (status);
 }

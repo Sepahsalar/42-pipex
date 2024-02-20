@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 11:26:48 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:42:40 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:20:30 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ static int	status_check(int status)
 
 void	first_child_process(int *fd, char **argv, char **envp)
 {
-	int		filein;
+	int	filein;
 
 	close(fd[0]);
 	if (access(argv[1], F_OK | R_OK) == -1)
 		error(EXIT_SUCCESS);
-	// if (access(argv[1], R_OK) == -1)
-	// 	error(EXIT_FAILURE);
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
 		error(EXIT_FAILURE);
@@ -46,14 +44,14 @@ void	first_child_process(int *fd, char **argv, char **envp)
 int	second_child_process(int *fd, char **argv, char **envp)
 {
 	int		fileout;
-	pid_t	child_pid;
+	pid_t	pid;
 	int		status;
 
 	status = 0;
 	close(fd[1]);
 	if (access(argv[4], F_OK) == 0 && access(argv[4], W_OK) == -1)
 		error(EXIT_FAILURE);
-	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fileout == -1)
 		error(EXIT_FAILURE);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
@@ -62,12 +60,12 @@ int	second_child_process(int *fd, char **argv, char **envp)
 		error(EXIT_FAILURE);
 	close(fd[0]);
 	close(fileout);
-	child_pid = fork();
-	if (child_pid == -1)
+	pid = fork();
+	if (pid == -1)
 		error(EXIT_FAILURE);
-	else if (child_pid == 0)
+	else if (pid == 0)
 		execute_cmd(argv[3], envp);
 	else
-		waitpid(child_pid, &status, 0);
+		waitpid(pid, &status, 0);
 	return (status_check(status));
 }

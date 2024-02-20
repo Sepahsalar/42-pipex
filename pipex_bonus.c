@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 12:11:42 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:18:44 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,19 @@ static int	open_file(char *argv, int i)
 	{
 		if (access(argv, F_OK | R_OK) == -1)
 			error(EXIT_SUCCESS);
-		// if (access(argv, R_OK) == -1)
-		// 	error(EXIT_FAILURE);
 		fd = open(argv, O_RDONLY);
 	}
 	else if (i == 1)
 	{
 		if (access(argv, F_OK) == 0 && access(argv, W_OK) == -1)
 			error(EXIT_FAILURE);
-		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
 	else
 	{
 		if (access(argv, F_OK) == 0 && access(argv, W_OK) == -1)
 			error(EXIT_FAILURE);
-		fd = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		fd = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	if (fd == -1)
 		error(EXIT_FAILURE);
@@ -95,8 +93,8 @@ static int	pipex(int argc, char **argv, char **envp)
 	else
 	{
 		i = 2;
-		fileout = open_file(argv[argc - 1], 1);
 		filein = open_file(argv[1], 0);
+		fileout = open_file(argv[argc - 1], 1);
 		if (dup2(filein, STDIN_FILENO) == -1)
 			error(EXIT_FAILURE);
 	}
@@ -106,7 +104,6 @@ static int	pipex(int argc, char **argv, char **envp)
 		error(EXIT_FAILURE);
 	execute_cmd(argv[argc - 2], envp);
 	wait(&status);
-	// waitpid(pid, &status, 0);
 	return (status_check(status));
 }
 
@@ -128,5 +125,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 		status = pipex(argc, argv, envp);
-	return (status); //or exit
+	return (status);
 }
