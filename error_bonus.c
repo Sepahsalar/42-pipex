@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 16:57:03 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:33:06 by asohrabi         ###   ########.fr       */
+/*   Created: 2024/02/20 11:31:40 by asohrabi          #+#    #+#             */
+/*   Updated: 2024/02/20 11:32:28 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#include "pipex_bonus.h"
 
-# include "libft/libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/wait.h>
+void	error(int status)
+{
+	perror("Error");
+	exit(status);
+}
 
-void	error(int status);
-void	ft_free(char **array);
-void	execute_cmd(char *argv, char **envp);
-void	here_doc(char *limiter);
+void	ft_free(char **array)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}

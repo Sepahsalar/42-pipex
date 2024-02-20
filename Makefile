@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 17:01:03 by asohrabi          #+#    #+#              #
-#    Updated: 2024/02/15 11:36:32 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/02/20 11:33:33 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ FUNC = pipex.c \
 FUNC_BONUS = pipex_bonus.c \
 				pipex_utils_bonus.c \
 				here_doc_bonus.c \
+				error_bonus.c \
 
 OBJ = ${FUNC:.c=.o}
 

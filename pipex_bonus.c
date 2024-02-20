@@ -6,17 +6,11 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 11:01:06 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:33:54 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	error(int status)
-{
-	perror("Error");
-	exit(status);
-}
 
 static void	child_process(char *argv, char **envp)
 {
@@ -49,7 +43,6 @@ static int	open_file(char *argv, int i)
 {
 	int	fd;
 
-	fd = 0;
 	if (i == 0)
 	{
 		if (access(argv, F_OK) == -1)
@@ -64,7 +57,7 @@ static int	open_file(char *argv, int i)
 			error(EXIT_FAILURE);
 		fd = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	}
-	else if (i == 2)
+	else
 	{
 		if (access(argv, F_OK) == 0 && access(argv, W_OK) == -1)
 			error(EXIT_FAILURE);
@@ -75,12 +68,24 @@ static int	open_file(char *argv, int i)
 	return (fd);
 }
 
-static void	pipex(int argc, char **argv, char **envp)
+static int	status_check(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS (status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + 128);
+	else
+		return (1);
+}
+
+static int	pipex(int argc, char **argv, char **envp)
 {
 	int		i;
 	int		filein;
 	int		fileout;
+	int		status;
 
+	status = 0;
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 	{
 		i = 3;
@@ -100,8 +105,9 @@ static void	pipex(int argc, char **argv, char **envp)
 	if (dup2(fileout, STDOUT_FILENO) == -1)
 		error(EXIT_FAILURE);
 	execute_cmd(argv[argc - 2], envp);
-	wait(NULL);
-	// waitpid(pid, NULL, 0);
+	wait(&status);
+	return (status_check(status));
+	// waitpid(pid, &status, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
