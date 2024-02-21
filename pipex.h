@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:49 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 18:07:07 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/21 10:27:05 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 void	error(int status);
 void	ft_free(char **array);
 void	execute_cmd(char *argv, char **envp);
-void	first_child_process(int *fd, char **argv, char **envp);
-int		second_child_process(int *fd, char **argv, char **envp);
 void	clean_cmd(char *str);
 
 #endif

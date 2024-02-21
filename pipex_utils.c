@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:33 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/20 18:03:47 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:06:05 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ static void	check_space(char *argv)
 	}
 }
 
+static void	execute_cmd_helper(char **cmd, char *path, char **envp)
+{
+	if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == -1)
+	{
+		if (path != cmd[0])
+			free(path);
+		error(126);
+	}
+	if (execve(path, cmd, envp) == -1)
+		error(EXIT_FAILURE);
+}
+
 void	execute_cmd(char *argv, char **envp)
 {
 	char	**cmd;
@@ -106,14 +118,5 @@ void	execute_cmd(char *argv, char **envp)
 		exit(127);
 	}
 	else
-	{
-		if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == -1)
-		{
-			if (path != cmd[0])
-				free(path);
-			error(126);
-		}
-		if (execve(path, cmd, envp) == -1)
-			error(EXIT_FAILURE);
-	}
+		execute_cmd_helper(cmd, path, envp);
 }

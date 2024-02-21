@@ -6,7 +6,7 @@
 #    By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 17:01:03 by asohrabi          #+#    #+#              #
-#    Updated: 2024/02/20 15:49:32 by asohrabi         ###   ########.fr        #
+#    Updated: 2024/02/21 10:56:47 by asohrabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,11 @@ NAME = pipex
 FUNC = pipex.c \
 			pipex_utils.c \
 			pipex_utils2.c \
-			processes.c \
 
 FUNC_BONUS = pipex_bonus.c \
 				pipex_utils_bonus.c \
 				pipex_utils2_bonus.c \
+				open_file_bonus.c \
 				here_doc_bonus.c \
 
 OBJ = ${FUNC:.c=.o}
