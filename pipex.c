@@ -6,14 +6,12 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 16:22:41 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/21 10:36:29 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:38:13 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-// handle quotations
-// when an error occured, do not exit the program
-// handle this: ./pipex int te wcl out1 for bonus part
+
 static int	status_check(int status)
 {
 	if (WIFEXITED(status))
