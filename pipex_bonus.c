@@ -6,7 +6,7 @@
 /*   By: asohrabi <asohrabi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:56:21 by asohrabi          #+#    #+#             */
-/*   Updated: 2024/02/21 10:57:01 by asohrabi         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:45:33 by asohrabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	status = 0;
 	if (argc < 5
 		|| (ft_strncmp(argv[1], "here_doc", find_max(argv[1], "here_doc")) == 0
-			&& argc < 6))
+			&& argc != 6))
 	{
 		ft_putendl_fd("Error: Wrong Arguments!", STDERR_FILENO);
 		ft_putendl_fd("Ex: ./pipex infile cmd1 cmd2 ... outfile",
